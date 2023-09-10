@@ -1,16 +1,17 @@
 'use client'
-import { useUsernameFromCookie } from '@/hooks/useUsernameFromCookie'
 import { useEffect } from 'react'
 import { Loader } from '@/components/Loader'
+import { redirect } from 'next/navigation'
+import { getUserName } from '@/helpers/getUserName'
 
 export default function Home() {
-  const userName = useUsernameFromCookie()
+  const userName = getUserName()
 
   useEffect(() => {
     if (userName) {
-      window.location.href = '/time'
+      redirect('/time')
     } else {
-      window.location.href = '/login'
+      redirect('/login')
     }
   }, [userName])
 

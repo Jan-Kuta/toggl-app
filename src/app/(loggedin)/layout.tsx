@@ -1,18 +1,19 @@
 'use client'
 import Link from 'next/link'
-import { useUsernameFromCookie } from '@/hooks/useUsernameFromCookie'
 import { useEffect } from 'react'
+import { redirect } from 'next/navigation'
+import { getUserName } from '@/helpers/getUserName'
 
 export default function LoggedinLayout({
                                      children,
                                    }: {
   children: React.ReactNode
 }) {
-  const userName = useUsernameFromCookie()
+  const userName = getUserName()
 
   useEffect(() => {
     if (!userName) {
-      window.location.href = '/login'
+      redirect('/login')
     }
   }, [userName])
 
