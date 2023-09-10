@@ -8,7 +8,7 @@ export function useUsernameFromCookie() {
   // Efekt, který načte hodnotu "username" z cookie při prvním načtení komponenty
   useEffect(() => {
     // Funkce pro načtení hodnoty z cookie
-    function getCookie(name) {
+    function getCookie(name: string) {
       const cookies = document.cookie.split(';');
       for (let i = 0; i < cookies.length; i++) {
         const cookie = cookies[i].trim();
