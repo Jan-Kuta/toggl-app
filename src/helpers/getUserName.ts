@@ -1,4 +1,3 @@
 export function getUserName(): string {
-  return localStorage
-    ? localStorage.getItem('userName') || '' : ''
+  return process.env.NEXT_PUBLIC_USERNAME || '';
 }

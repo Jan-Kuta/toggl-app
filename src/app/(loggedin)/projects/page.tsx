@@ -1,8 +1,21 @@
+import { getProjects } from '@/api/projects'
 
-export default function Projects() {
+async function getData() {
+  const res = await getProjects()
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data')
+  }
+
+  return res.json()
+}
+
+export default async function Projects() {
+  const data = await getData()
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold text-center">Toggl clone App - projects page</h1>
-    </main>
+    <>
+      <h1 className="text-2xl font-bold">Projects</h1>
+      {JSON.stringify(data)}
+    </>
   )
 }
