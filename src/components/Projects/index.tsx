@@ -36,6 +36,15 @@ export const Projects = ({ projects }: Props) => {
     setEditingProject(projects.find((project: Project) => project.id === id))
   }
 
+  const toggleProjectActive = (id: number) => async () => {
+    const project = projects.find((project: Project) => project.id === id)
+    const res = await updateProject({ ...project, active: !project.active })
+
+    if (res.ok) {
+      router.refresh()
+    }
+  }
+
   const onCreateProject = () => {
     setEditingProject({ name: '', user_name: getUserName(), active: true, id: undefined })
   }
@@ -56,7 +65,7 @@ export const Projects = ({ projects }: Props) => {
         </button>
       </div>
 
-      <ProjectList projects={projects} selectProject={selectProject} />
+      <ProjectList projects={projects} selectProject={selectProject} toggleProjectActive={toggleProjectActive} />
     </>
   )
 }
