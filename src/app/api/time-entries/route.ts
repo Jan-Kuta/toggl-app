@@ -10,7 +10,7 @@ export async function GET(request: Request) {
       'Content-Type': 'application/json',
       'Accept': '*/*',
     },
-    cache: 'no-store',
+    next: { tags: ['time-entries'] },
   })
 
   const data = await res.json()

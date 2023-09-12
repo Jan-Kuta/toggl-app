@@ -5,6 +5,9 @@ async function getData() {
 
   const res = await fetch(generateLocalUrl('/api/projects'), {
     method: 'GET',
+    next: {
+      tags: ['projects'],
+    }
   })
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
