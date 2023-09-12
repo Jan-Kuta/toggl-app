@@ -5,6 +5,7 @@ import { getUserName } from '@/helpers/getUserName'
 import { formatDate } from '@/helpers/formatDate'
 import { generateLocalUrl } from '@/helpers/generateUrl'
 import { useRouter } from 'next/navigation'
+import { ProjectSelector } from '@/components/ProjectSelector'
 
 const initalState = {task: '', start: '', end: '', project_id: 1, user_name: getUserName()}
 export const TimeEntryForm = () => {
@@ -33,12 +34,18 @@ export const TimeEntryForm = () => {
     setTimeEntry({ ...timeEntry, [name]: value });
   };
 
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setTimeEntry({ ...timeEntry, [name]: value });
+  }
+
   return (
     <form className="space-y-6">
       <div className="flex flex-wrap mb-6 items-end">
         <Input label="Task" name="task" value={timeEntry.task} onChange={handleInputChange} />
         <Input label="Start" name="start" value={timeEntry.start} onChange={handleInputChange} type="datetime-local" />
         <Input label="End" name="end" value={timeEntry.end} onChange={handleInputChange} type="datetime-local"/>
+        <ProjectSelector name="project_id" value={timeEntry.project_id} handleChange={handleSelectChange} />
         <div className="ml-8">
         {timeEntry.start ? (
           //start button
