@@ -1,8 +1,28 @@
+import { Projects } from '@/components/Projects'
+import { generateLocalUrl } from '@/helpers/generateUrl'
+import { TimeEntryForm } from '@/components/TimeEntryForm'
 
-export default function Time() {
+
+async function getData() {
+
+  const res = await fetch(generateLocalUrl('/api/time-entries'), {
+    method: 'GET',
+    cache: 'no-store'
+  })
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data')
+  }
+
+  return res.json()
+}
+
+export default async function TimePage() {
+  const { data } = await getData()
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold text-center">Toggl clone App - Time page</h1>
-    </main>
+    <>
+      <TimeEntryForm />
+      <p>{JSON.stringify(data)}</p>
+    </>
   )
 }

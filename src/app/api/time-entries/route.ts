@@ -4,15 +4,13 @@ import { revalidateTag } from 'next/cache'
 
 
 export async function GET(request: Request) {
-  const res = await fetch(generateUrl('/projects'), {
+  const res = await fetch(generateUrl('/time-entries'), {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       'Accept': '*/*',
     },
-    next: {
-      tags: ['projects'],
-    }
+    cache: 'no-store',
   })
 
   const data = await res.json()
@@ -22,7 +20,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const json = await request.json()
-  const res = await fetch(generateUrl('/projects'), {
+  const res = await fetch(generateUrl('/time-entries'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -32,27 +30,7 @@ export async function POST(request: Request) {
   })
 
   if (res.ok) {
-    revalidateTag('projects')
-  }
-
-  const data = await res.json()
-
-  return NextResponse.json({ data })
-}
-
-export async function PUT(request: Request) {
-  const json = await request.json()
-  const res = await fetch(generateUrl('/projects'), {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': '*/*',
-    },
-    body: JSON.stringify(json),
-  })
-
-  if (res.ok) {
-    revalidateTag('projects')
+    revalidateTag('time-entries')
   }
 
   const data = await res.json()
